@@ -6,16 +6,18 @@ import java.util.ArrayList;
 public class Player implements Comparable<Player> {
     // general player info
     private String playerName;
+    private int playerNumber;
     private int balance;
     private ArrayList<Transactions> balanceSheet;
 
     // bots only
-    private AI brain;
+    public AI brain;
     private ArrayList<Integer> knownCards;
     private double expected;
 
     public Player(String name, Integer card, int playerNumber) {
         this.playerName = name;
+        this.playerNumber = playerNumber;
         this.balance = 0;
         this.balanceSheet = new ArrayList<>();
 
@@ -27,21 +29,20 @@ public class Player implements Comparable<Player> {
     }
 
     public void findExpected() {
-        // TODO: implement the logic to determine the expected value of the product
+        this.expected = this.brain.myMarketValueMu;
     }
 
     /**
      *
      * @return analyze whether to buy or sell
      */
-    public int analyze() {
-        // TODO: implement the logic to determine the number of products to buy/sell
-        return 0;
-    }
-
-    public void updateKnowledge(int newCard) {
-        knownCards.add(newCard);
-        findExpected();
+    public int analyze(int low, int high) {
+        double mid = (low + high)/2;
+        if (this.expected < mid) {
+            return this.brain.sellQuantity(low);
+        } else {
+            return this.brain.buyQuantity(high);
+        }
     }
 
     /**
@@ -118,7 +119,7 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player p) {
-        return this.balance - p.balance;
+        return p.balance - this.balance;
     }
 
     public double getExpected() {
@@ -131,6 +132,10 @@ public class Player implements Comparable<Player> {
 
     public int getBalance() {
         return this.balance;
+    }
+
+    public int getCard() {
+        return this.knownCards.get(0);
     }
 
     public String getPlayerName() {
