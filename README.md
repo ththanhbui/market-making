@@ -82,3 +82,4 @@ We hope Market Making 101 is an interesting introduction that potentially inspir
 We learned how to use [Keanu](https://improbable-research.github.io/keanu/) as a probabilistic programming language and how to incorporate it into our project.
 
 ## What's next for Market Making 101
+We are making the game more difficult by allowing a larger range of values, hence increase the uncertainty of the true value. The spread could also be varied depending on how confident the market maker is of the true value. Lastly, we hope we have time for a more eye-catching UI than the pretty-printing in the terminal.
