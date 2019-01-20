@@ -22,7 +22,7 @@ public class AI {
     int playerNumber;
     double myMarketValueMu = 56;
     double myMarketValueSigma = 7;
-    double riskThreshold = 0.25;
+    double riskThreshold = 0.8;
 
     public AI(int playerNumber, int playerCardValue) {
         ownCardValue = playerCardValue;
@@ -137,10 +137,10 @@ public class AI {
     }
 
     public int buyQuantity(double transactionPrice) {
-        return Math.max((int) ((transactionPrice - myMarketValueMu) / myMarketValueSigma * riskThreshold * 5), 1);
+        return Math.max((int) (((transactionPrice - myMarketValueMu) / myMarketValueSigma * riskThreshold * 5) + 0.6), 1);
     }
 
     public int sellQuantity(double transactionPrice) {
-        return Math.min((int) -((transactionPrice - myMarketValueMu) / myMarketValueSigma * riskThreshold * 5), -1);
+        return Math.min((int) -(((transactionPrice - myMarketValueMu) / myMarketValueSigma * riskThreshold * 5) + 0.6), -1);
     }
 }

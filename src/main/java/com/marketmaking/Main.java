@@ -75,11 +75,9 @@ public class Main {
                         int qty = players.get(bs_pos-1).analyze((int) Math.floor(players.get(mm_pos-1).getExpected()+0.5),
                                 (int) Math.ceil(players.get(mm_pos-1).getExpected()+0.5));
                         players.get(bs_pos-1).transaction(players.get(mm_pos-1), qty);
-
-                        for (Player p : players) {
+                        for (Player p : players)
                             p.brain.enemyTransactedAt(bs_pos - 1, qty < 0 ? (int) Math.floor(players.get(mm_pos - 1).getExpected() + 0.5) : (int) Math.ceil(players.get(mm_pos - 1).getExpected() + 0.5));
-                            System.out.println("Guess "+p.brain.guessCardValue(bs_pos-1, (int) Math.floor(players.get(mm_pos - 1).getExpected() + 0.5)));
-                        }
+
                         System.out.printf("%s decided to %s %d at %d.\n",
                                 players.get(bs_pos-1).getPlayerName(),
                                 qty < 0 ? "sell" : "buy",
@@ -171,14 +169,17 @@ public class Main {
     }
 
     public void calculateResult() {
+        System.out.println();
         // Print out all cards & Calculate each player's balance
         for (Player p : players) {
             System.out.println(p.getPlayerName()+" has a card of "+p.getCard());
             p.calculateFinalBalance(marketValue);
         }
-
+        System.out.println();
         System.out.println("The market value is "+marketValue);
 
+        System.out.println();
+        System.out.println("The game has ended. The result is as follows: ");
         // Rank according to balance
         Collections.sort(players);
         int position = 1;
@@ -239,13 +240,17 @@ public class Main {
         // initialise the game
         Main game = new Main(name, Integer.parseInt(pos));
         int round = 1;
+        System.out.println("Dealing cards...");
+        System.out.println();
         System.out.println("Your card is "+game.players.get(Integer.parseInt(pos)-1).getCard());
 
-        // Debug
-        for (Player p : game.players) {
-            System.out.println(p.getPlayerName()+" "+p.getCard());
-        }
+//        // Debug
+//        for (Player p : game.players) {
+//            System.out.println(p.getPlayerName()+" "+p.getCard());
+//        }
+        System.out.println(game.marketValue);
 
+        System.out.println();
         System.out.println("==================== Start of round "+round+" ====================");
         System.out.println();
         // round 1
@@ -264,7 +269,6 @@ public class Main {
         game.advance(scanner, round);
 
         // result
-        System.out.println("The game has ended. The result is as follows: ");
         System.out.print("All the cards are ");
         for (int i : game.seven_cards)
             System.out.print(i+" ");
