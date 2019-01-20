@@ -15,6 +15,7 @@
 You should now be ready! To run the game:
 
 1. Open the `market-making` folder in IntelliJ.
+1. Tick the box `Use auto-import`.
 1. Open `market-making/src/main/java/com/marketmaking/Main.java`.
 1. Right click the `main` function, and select `Run`.
 
