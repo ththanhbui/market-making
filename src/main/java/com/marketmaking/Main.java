@@ -25,28 +25,28 @@ public class Main {
         this.playerPos = pos;
         switch (playerPos) {
             case 1:
-                players.add(new Player(name, seven_cards[0]));
-                players.add(new Player("Bob", seven_cards[1]));
-                players.add(new Player("Charlie", seven_cards[2]));
-                players.add(new Player("Dave", seven_cards[3]));
+                players.add(new Player(name, seven_cards[0], 3));
+                players.add(new Player("Bob", seven_cards[1], 0));
+                players.add(new Player("Charlie", seven_cards[2], 1));
+                players.add(new Player("Dave", seven_cards[3], 2));
                 break;
             case 2:
-                players.add(new Player("Alice", seven_cards[0]));
-                players.add(new Player(name, seven_cards[1]));
-                players.add(new Player("Charlie", seven_cards[2]));
-                players.add(new Player("Dave", seven_cards[3]));
+                players.add(new Player("Alice", seven_cards[0], 0));
+                players.add(new Player(name, seven_cards[1], 3));
+                players.add(new Player("Charlie", seven_cards[2], 1));
+                players.add(new Player("Dave", seven_cards[3], 2));
                 break;
             case 3:
-                players.add(new Player("Alice", seven_cards[0]));
-                players.add(new Player("Bob", seven_cards[1]));
-                players.add(new Player(name, seven_cards[2]));
-                players.add(new Player("Dave", seven_cards[3]));
+                players.add(new Player("Alice", seven_cards[0], 0));
+                players.add(new Player("Bob", seven_cards[1], 1));
+                players.add(new Player(name, seven_cards[2], 3));
+                players.add(new Player("Dave", seven_cards[3], 2));
                 break;
             case 4:
-                players.add(new Player("Alice", seven_cards[0]));
-                players.add(new Player("Bob", seven_cards[1]));
-                players.add(new Player("Charlie", seven_cards[2]));
-                players.add(new Player(name, seven_cards[3]));
+                players.add(new Player("Alice", seven_cards[0], 0));
+                players.add(new Player("Bob", seven_cards[1], 1));
+                players.add(new Player("Charlie", seven_cards[2], 2));
+                players.add(new Player(name, seven_cards[3], 3));
                 break;
             default:
                 break;
@@ -59,7 +59,7 @@ public class Main {
             // user is NOT the MM
             if (mm_pos != playerPos) {
                 // Player #mm_pos makes the market
-                System.out.printf("%s makes the market at %d-%d.\n",
+                System.out.printf("%s made the market at %d-%d.\n",
                         players.get(mm_pos-1).getPlayerName(),
                         (int) Math.floor(players.get(mm_pos-1).getExpected()),
                         (int) Math.ceil(players.get(mm_pos-1).getExpected()));
@@ -104,7 +104,7 @@ public class Main {
                 while (!isNumeric(low = sc.nextLine())) {
                     System.out.println("Please enter a valid number representing the lower limit of the spread: ");
                 }
-                System.out.printf("You have set the market at %d-%d.\n", Integer.parseInt(low), Integer.parseInt(low)+1);
+                System.out.printf("You have made the market at %d-%d.\n", Integer.parseInt(low), Integer.parseInt(low)+1);
                 players.get(mm_pos-1).setExpected(Integer.parseInt(low) + 0.5);
                 sleep(1);
 
@@ -118,7 +118,7 @@ public class Main {
                             players.get(bs_pos-1).getPlayerName(),
                             qty < 0 ? "sell" : "buy",
                             Math.abs(qty),
-                            qty < 0 ? (int) Math.ceil(players.get(mm_pos-1).getExpected()) : (int) Math.floor(players.get(mm_pos-1).getExpected()));
+                            qty < 0 ? (int) Math.floor(players.get(mm_pos-1).getExpected()) : (int) Math.ceil(players.get(mm_pos-1).getExpected()));
                     sleep(1);
                     bs_count++;
                 }
@@ -189,14 +189,14 @@ public class Main {
     private int[] dealUniformWithoutReplacement(){
         Random randomNum = new Random();
         int[] result = new int[7];
+        HashSet<Integer> set = new HashSet<>();
         for(int i=0; i<7; i++) {
-            result[i] = randomNum.nextInt(15);
-            for(int j=0; j<i; j++){
-                if(result[i] == result[j]){
-                    result[i] = randomNum.nextInt(15);
-                    break;
-                }
+            int temp = randomNum.nextInt(15);
+            while(set.contains(temp)){
+                temp = randomNum.nextInt(15);
             }
+            result[i] = temp;
+            set.add(result[i]);
         }
 
         for (int i=0; i<7; i++)

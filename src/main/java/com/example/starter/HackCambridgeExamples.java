@@ -7,11 +7,9 @@ import io.improbable.keanu.algorithms.mcmc.MetropolisHastings;
 import io.improbable.keanu.algorithms.variational.optimizer.KeanuOptimizer;
 import io.improbable.keanu.algorithms.variational.optimizer.Optimizer;
 import io.improbable.keanu.network.BayesianNetwork;
-import io.improbable.keanu.tensor.intgr.IntegerTensor;
 import io.improbable.keanu.vertices.bool.BooleanVertex;
 import io.improbable.keanu.vertices.dbl.DoubleVertex;
 import io.improbable.keanu.vertices.dbl.probabilistic.GaussianVertex;
-import io.improbable.keanu.vertices.generic.probabilistic.discrete.CategoricalVertex;
 import io.improbable.keanu.vertices.intgr.IntegerVertex;
 import io.improbable.keanu.vertices.intgr.nonprobabilistic.ConstantIntegerVertex;
 import io.improbable.keanu.vertices.intgr.probabilistic.UniformIntVertex;
@@ -91,7 +89,7 @@ public class HackCambridgeExamples {
          * just match the prior.
          */
         PosteriorSamplingAlgorithm sampler = MetropolisHastings.withDefaultConfig();
-        NetworkSamples samples = sampler.getPosteriorSamples(net, isCat,20000).drop(1000);
+        NetworkSamples samples = sampler.getPosteriorSamples(net, isCat, 20000).drop(1000);
 
         /*
          * We'd expect this to produce a probability close to 25% as it's just a 1/4 chance at this point

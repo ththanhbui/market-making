@@ -10,15 +10,17 @@ public class Player implements Comparable<Player> {
     private ArrayList<Transactions> balanceSheet;
 
     // bots only
+    private AI brain;
     private ArrayList<Integer> knownCards;
     private double expected;
 
-    public Player(String name, Integer card) {
+    public Player(String name, Integer card, int playerNumber) {
         this.playerName = name;
         this.balance = 0;
         this.balanceSheet = new ArrayList<>();
 
         // useful for bots only
+        brain = new AI(playerNumber, card);
         this.knownCards = new ArrayList<>();
         knownCards.add(card);
         findExpected();
@@ -148,7 +150,7 @@ public class Player implements Comparable<Player> {
     }
 
     public static void main(String args[]) {
-        Player test = new Player("test", 1);
+        Player test = new Player("test", 1, 1);
         test.printBalanceSheet();
         test.calculateFinalBalance(55);
     }
